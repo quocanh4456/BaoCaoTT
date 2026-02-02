@@ -14,7 +14,7 @@ const Footer = () => {
               Báo điện tử News - Đài Tiếng nói Việt Nam.<br/>
               Giấy phép hoạt động báo chí điện tử số 335/GP-BTTTT.<br/>
               Tổng Biên tập: Ngô Thiệu Phong.<br/>
-              Tòa soạn: Tầng 12A, Tòa nhà VTC Online, 18 Tam Trinh, Hà Nội.
+              Tòa soạn: Tầng 9, Trung tâm Phát thanh Quốc gia, Số 58 Quán Sứ, phường Cửa Nam, thành phố Hà Nội.
             </Typography>
           </Grid>
           <Grid size={{ xs: 12, md: 7 }}>

@@ -1,49 +1,54 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography, CardActionArea, Chip, Box } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@mui/material';
+import { Link } from 'react-router-dom'; // 👈 Quan trọng: Import Link
 import type { Article } from '../types/news';
 
-// Định nghĩa kiểu dữ liệu cho Props
 interface NewsCardProps {
   article: Article;
-  isFeatured?: boolean; // Optional prop
+  isFeatured?: boolean;
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({ article, isFeatured = false }) => {
   return (
-    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-      <CardActionArea sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      {/* 👇 Dùng Link bao quanh toàn bộ thẻ để bấm được */}
+      <CardActionArea component={Link} to={`/article/${article.id}`}> 
+        
         <CardMedia
           component="img"
-          height={isFeatured ? "350" : "180"}
-          image={article.image}
+          height={isFeatured ? "400" : "200"}
+          image={article.image || 'https://placehold.co/600x400'}
           alt={article.title}
         />
         
-        {isFeatured ? (
-          <Box sx={{ 
-            position: 'absolute', bottom: 0, left: 0, width: '100%', 
-            bgcolor: 'rgba(0, 0, 0, 0.7)', color: 'white', p: 2 
-          }}>
-            <Chip label={article.category} color="error" size="small" sx={{ mb: 1 }} />
-            <Typography variant="h4" component="div" fontWeight="bold">
-              {article.title}
-            </Typography>
-          </Box>
-        ) : (
-          <CardContent sx={{ flexGrow: 1 }}>
-            <Typography gutterBottom variant="caption" component="div" color="error" fontWeight="bold">
-              {article.category.toUpperCase()}
-            </Typography>
-            <Typography gutterBottom variant="h6" component="div" lineHeight={1.2}>
-              {article.title}
-            </Typography>
-            {article.summary && (
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                {article.summary}
-              </Typography>
-            )}
-          </CardContent>
-        )}
+        <CardContent sx={{ flexGrow: 1 }}>
+          <Typography
+            gutterBottom
+            variant={isFeatured ? "h4" : "h6"}
+            component="div"
+            fontWeight="bold"
+            sx={{
+              '&:hover': { color: '#1976d2' },
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: isFeatured ? 3 : 2,
+              WebkitBoxOrient: 'vertical',
+            }}
+          >
+            {article.title}
+          </Typography>
+          
+          <Typography variant="body2" color="text.secondary">
+             {/* Chỉ hiện tóm tắt nếu là bài nổi bật */}
+             {isFeatured && article.summary}
+          </Typography>
+
+          <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+            {new Date(article.time || article.publish_date || Date.now()).toLocaleDateString('vi-VN')}
+          </Typography>
+        </CardContent>
+
       </CardActionArea>
     </Card>
   );

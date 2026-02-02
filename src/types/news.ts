@@ -1,5 +1,6 @@
 // Định nghĩa cấu trúc của một bài báo
 export interface Article {
+  publish_date: string | undefined;
   id: number;
   title: string;
   summary?: string; // Dấu ? nghĩa là có thể null/undefined
